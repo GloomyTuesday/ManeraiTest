@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8d69c5b0e9ecda4194bf39332a4cdac, type: 3}
+  m_Name: EnumIntegrityCheckerBase
+  m_EditorClassIdentifier: 
+  _check: 0
+  _assemblyGroups:
+  - _directoryDescriptionName: Scripts.BaseSystems
+    _assemblyFile: {fileID: 5897886265953266890, guid: 36a4e609c78dc6a4abdad7fc35856d95,
+      type: 3}
+    _directoryDescription:
+    - _directoryDescription: FileIOAndBinary
+      _directoryObject: {fileID: 102900000, guid: cbfd046d871195249a6d766936eaf679,
+        type: 3}
+  _checkedFiles: []
+  _directoryToolsObj: {fileID: 11400000, guid: ba3f3fe18a8730c49a8b6a74e166db46, type: 2}

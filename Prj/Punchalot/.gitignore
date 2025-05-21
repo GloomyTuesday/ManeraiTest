@@ -1,0 +1,142 @@
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Unity Cache
+UserSettings/
+
+# Rider / JetBrains
+.idea/
+.vs/
+*.sln.iml
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Visual Studio
+*.csproj
+*.sln
+*.user
+*.unityproj
+*.suo
+*.tmp
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# Build results
+*.apk
+*.aab
+*.xcodeproj/
+*.xcworkspace/
+*.xcuserstate
+
+# Auto-generated crash/debug logs
+sysinfo.txt
+
+# Unity Collaborate
+.collabignore
+
+# Asset meta files cache
+*.pidb.meta
+*.pdb.meta
+
+# Unity Cloud Build
+[Uu]serSettings/
+
+# TextMesh Pro
+TextMesh Pro/*/*.txt
+
+# Localization
+*.locres
+
+# Addressable Assets
+Assets/AddressableAssetsData/*/*.bin
+Assets/AddressableAssetsData/*/*.hash
+Assets/AddressableAssetsData/*/*.bundle
+
+# Ignore all .meta files EXCEPT those inside Assets (because Unity needs them)
+!Assets/**/*.meta
+
+# Uncomment below if using Git LFS for large binary assets
+# *.psd filter=lfs diff=lfs merge=lfs -text
+# *.png filter=lfs diff=lfs merge=lfs -text
+# *.fbx filter=lfs diff=lfs merge=lfs -text
+
+# Logs
+*.log
+
+# Crash logs
+*.dmp
+
+# Shader cache
+*.shadercache
+*.giparams
+
+# Unity YAML merge config (optional)
+*.yaml
+
+# Temporary scriptable build pipeline caches
+Assets/StreamingAssets/aa.meta
+Assets/StreamingAssets/aa/
+
+# Ignore all platform-specific builds
+*.exe
+*.app
+*.ipa
+*.dmg
+*.msi
+*.zip
+
+# Ignore version control folders inside Assets (if any)
+Assets/**/.svn/
+Assets/**/.git/
+
+# Optional - Unity Plastic SCM
+PlasticSCM/
+
+# Optional - JetBrains Rider plugin
+.idea/
+
+# Optional - Build Reports
+BuildReports/
+
+# Optional - Crash dumps
+*.stacktrace
+
+# Optional - Scripted Importer Cache
+*.import.json
+
+# Optional - Preview files
+*.preview
+
+# Optional - Timeline/Animation auto-generated data
+*.playable
+
+# Optional - SpeedTree data
+*.spm.meta
+*.speedtree
+
+# Optional - Unity Analytics
+*.analytics
+
+# End of .gitignore

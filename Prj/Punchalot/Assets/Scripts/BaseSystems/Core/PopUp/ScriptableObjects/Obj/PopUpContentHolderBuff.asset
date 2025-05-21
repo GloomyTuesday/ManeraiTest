@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df0da2e1c392bd14a9c9898e3079bd79, type: 3}
+  m_Name: PopUpContentHolderBuff
+  m_EditorClassIdentifier: 
+  _backgroundHolder: 
+  _contentHolder: 
+  _popUpOpen: {fileID: 7400000, guid: 8a7151c5bff7d98468ae226c77e4dc64, type: 2}
+  _popUpClose: {fileID: 7400000, guid: 342db9e9f06638c459a0f1b1d7b75e02, type: 2}
+  _bgOpen: {fileID: 7400000, guid: 0499d36c20ac249449740f139bb7a3b4, type: 2}
+  _bgClose: {fileID: 7400000, guid: 59e8cde8564432e4f91887b3d46f5b3e, type: 2}
+  _bgPointerDown: {fileID: 7400000, guid: c1d986f9dcd8e2640a9d66781e3529af, type: 2}
+  _bgCloseCanceled: {fileID: 7400000, guid: 403cfb2a959caf34db8ec7a340bcfcfb, type: 2}
+  _backgroundPrefab: {fileID: 0}
