@@ -28,6 +28,9 @@ namespace Scripts.ProjectSrc
         [SerializeField]
         private Transform _initPoint;
 
+        [SerializeField]
+        private Transform _currentPosition;
+
         [Space(15)]
         [Header("Transform speed animation curve")]
         [SerializeField]
@@ -87,17 +90,18 @@ namespace Scripts.ProjectSrc
         private bool SubscribedInputEvents { get; set; }
         private bool SubscribedUpdateEvents { get; set; }
 
-        private Vector3 StartPointLocal { get; set; }
+        /*
+        private Vector3 StartPositionWorld { get; set; }
         private Vector3 StartScaleLocal { get; set; }
-        private Quaternion StartRotationLocal { get; set; }
-
-        private Vector3 TargetPositionLocal { get; set; }
+        private Quaternion StartRotationWorld { get; set; }
+        
+        private Vector3 TargetPositionWorld { get; set; }
         private Vector3 TargetScaleLocal { get; set; }
-        private Quaternion TargetRotationLocal { get; set; }
-
+        private Quaternion TargetRotationWorld { get; set; }
+        */
 
         private Transform TargetTransform { get; set; }
-
+        private Transform StartTransform { get; set; }
 
         private AnimationCurve ActiveAnimCurve { get; set; }
 
@@ -121,7 +125,8 @@ namespace Scripts.ProjectSrc
 
         private void OnEnable()
         {
-            _rigidbodyParent = _rigidbodyToTransform.transform.parent; 
+            _rigidbodyParent = _rigidbodyToTransform.transform.parent;
+            StartTransform = _currentPosition; 
 
             Subcribe();
         }
@@ -204,9 +209,7 @@ namespace Scripts.ProjectSrc
         }
 
         private void StartAnimationSequence(
-            Vector3 targetPointLocal,
-            Vector3 targetScaleLocal,
-            Quaternion targetRotationLocal,
+            Transform targetTransform,
             AnimationCurve activeAnimationCurve,
             float duration
             )
@@ -214,13 +217,11 @@ namespace Scripts.ProjectSrc
             Duration = duration;
             PassedTime = 0;
 
-            StartPointLocal = _rigidbodyToTransform.transform.localPosition;
-            StartScaleLocal = _rigidbodyToTransform.transform.localScale;
-            StartRotationLocal = _rigidbodyToTransform.transform.localRotation;
+            StartTransform.position = _rigidbodyToTransform.position;
+            StartTransform.localScale = _rigidbodyToTransform.transform.localScale;
+            StartTransform.rotation = _rigidbodyToTransform.rotation;
 
-            TargetPositionLocal = targetPointLocal;
-            TargetScaleLocal = targetScaleLocal;
-            TargetRotationLocal = targetRotationLocal;
+            TargetTransform = targetTransform;
 
             ActiveAnimCurve = activeAnimationCurve;
 
@@ -234,14 +235,9 @@ namespace Scripts.ProjectSrc
         private void StartLoading()
         {
             MoveThroughPhysics = false; 
-            Debug.Log("\t " + gameObject.name + "\t Loading");
-
-            TargetTransform = _loadPoint;
 
             StartAnimationSequence(
-                _loadPoint.localPosition,
-                _loadPoint.localScale,
-                _loadPoint.localRotation,
+                _loadPoint,
                 _loadAnimCurve,
                 _loadTime
                 ); 
@@ -250,14 +246,9 @@ namespace Scripts.ProjectSrc
         private void StartHit()
         {
             MoveThroughPhysics = true; 
-            Debug.Log("\t " + gameObject.name + "\t Hit ");
-
-            TargetTransform = _hitPoint;
 
             StartAnimationSequence(
-                _hitPoint.localPosition,
-                _hitPoint.localScale,
-                _hitPoint.localRotation,
+                _hitPoint,
                 _loadAnimCurve,
                 _loadTime
                 );
@@ -266,14 +257,9 @@ namespace Scripts.ProjectSrc
         private void StartRestoreToInit()
         {
             MoveThroughPhysics = false; 
-            Debug.Log("\t "+gameObject.name+"\t To init ");
-
-            TargetTransform = _initPoint;
 
             StartAnimationSequence(
-                _initPoint.localPosition,
-                _initPoint.localScale,
-                _initPoint.localRotation,
+                _initPoint,
                 _restoreToInitAnimCurve,
                 _restoreToInitTime
                 );
@@ -288,8 +274,6 @@ namespace Scripts.ProjectSrc
                 return;
             }
 
-            TargetPositionLocal = TargetTransform.localPosition;
-            TargetRotationLocal = TargetTransform.localRotation;
 
             if (PassedTime >= Duration)
             {
@@ -304,17 +288,18 @@ namespace Scripts.ProjectSrc
                 ITimeUtilitiesEventsCallbackHandler.OnUnityFixedUpdate -= UnityFixedUpdate;
                 SubscribedUpdateEvents = false;
 
-                _rigidbodyToTransform.transform.localScale = TargetScaleLocal;
+                _rigidbodyToTransform.transform.localScale = TargetTransform.localScale;
 
                 if (MoveThroughPhysics)
                 {
-                    _rigidbodyToTransform.MovePosition(_rigidbodyParent.TransformPoint(TargetPositionLocal));
-                    _rigidbodyToTransform.MoveRotation(_rigidbodyParent.rotation * TargetRotationLocal);
+                    _rigidbodyToTransform.MovePosition(TargetTransform.position);
+                    _rigidbodyToTransform.MoveRotation(TargetTransform.rotation);
+
                     return; 
                 }
 
-                _rigidbodyToTransform.transform.localPosition = TargetPositionLocal;
-                _rigidbodyToTransform.transform.localRotation = TargetRotationLocal;
+                _rigidbodyToTransform.transform.position = TargetTransform.position;
+                _rigidbodyToTransform.transform.rotation = TargetTransform.rotation;
 
                 return;
             }
@@ -330,19 +315,20 @@ namespace Scripts.ProjectSrc
 
             var lerpValue = ActiveAnimCurve.Evaluate(t);
 
-            var newLocalPosition = Vector3.Lerp( StartPointLocal, TargetPositionLocal, lerpValue );
-            var newLocalRotation = Quaternion.Lerp(StartRotationLocal, TargetRotationLocal, lerpValue);
-            _rigidbodyToTransform.transform.localScale = Vector3.Lerp( StartScaleLocal, TargetScaleLocal, lerpValue );
+            var newPosition = Vector3.Lerp( StartTransform.position, TargetTransform.position, lerpValue );
+            var newRotation = Quaternion.Lerp(StartTransform.rotation, TargetTransform.rotation, lerpValue);
+
+            _rigidbodyToTransform.transform.localScale = Vector3.Lerp(StartTransform.localScale, TargetTransform.localScale, lerpValue );
 
             if(MoveThroughPhysics)
             {
-                _rigidbodyToTransform.MovePosition(_rigidbodyParent.TransformPoint(newLocalPosition));
-                _rigidbodyToTransform.MoveRotation(_rigidbodyParent.rotation * newLocalRotation);
+                _rigidbodyToTransform.MovePosition(newPosition);
+                _rigidbodyToTransform.MoveRotation(newRotation);
                 return; 
             }
 
-            _rigidbodyToTransform.transform.localPosition = newLocalPosition;
-            _rigidbodyToTransform.transform.localRotation = newLocalRotation;
+            _rigidbodyToTransform.transform.position = newPosition;
+            _rigidbodyToTransform.transform.rotation = newRotation;
         }
 
     }

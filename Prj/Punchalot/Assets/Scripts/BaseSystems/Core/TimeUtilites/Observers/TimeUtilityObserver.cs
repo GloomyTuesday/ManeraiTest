@@ -160,6 +160,7 @@ namespace Scripts.BaseSystems.Core
 
         private async Task InitializeWwwDateTime()
         {
+            /*
             for (int i = 0; i < InternetTimeDataSources.Length; i++)
             {
                 var result = await IInternetTools.TryToGetRequestAnswerTcp(
@@ -176,6 +177,7 @@ namespace Scripts.BaseSystems.Core
                     break;
                 }
             }
+            */
         }
 
         private DateTime? GetDateTimeFromInternetAnswer(string str)
